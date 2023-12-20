@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Build stage
+# Builder stage
+# Builder stage
 FROM golang:1.10.0 AS builder
 
-RUN go get github.com/codegangsta/negroni \
+# Fetch dependencies and build the guestbook-go application
+RUN go get -d -v github.com/codegangsta/negroni \
            github.com/gorilla/mux \
            github.com/xyproto/simpleredis/v2
 
@@ -27,15 +30,11 @@ FROM alpine
 
 WORKDIR /app
 
+# Copy the built executable and necessary files from the builder stage
 COPY --from=builder /app/main .
 COPY ./public/index.html public/index.html
 COPY ./public/script.js public/script.js
 COPY ./public/style.css public/style.css
-
-# Build the guestbook-go application
-RUN go get github.com/codegangsta/negroni \
-    && go get github.com/gorilla/mux \
-    && go build -o guestbook-go .
 
 # Install Redis
 RUN apk update && apk add redis
@@ -44,5 +43,6 @@ RUN apk update && apk add redis
 EXPOSE 6379
 EXPOSE 3000
 
-# Start Redis and your Go application
-CMD ["sh", "-c", "./guestbook-go","redis-server & ./main"]
+# Start Redis and both Go applications
+CMD ["sh", "-c", "./redis-server & ./guestbook-go && ./main"]
+
