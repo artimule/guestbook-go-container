@@ -32,6 +32,11 @@ COPY ./public/index.html public/index.html
 COPY ./public/script.js public/script.js
 COPY ./public/style.css public/style.css
 
+# Build the guestbook-go application
+RUN go get github.com/codegangsta/negroni \
+    && go get github.com/gorilla/mux \
+    && go build -o guestbook-go .
+
 # Install Redis
 RUN apk update && apk add redis
 
@@ -40,4 +45,4 @@ EXPOSE 6379
 EXPOSE 3000
 
 # Start Redis and your Go application
-CMD ["sh", "-c", "redis-server & ./main"]
+CMD ["sh", "-c", "./guestbook-go","redis-server & ./main"]
