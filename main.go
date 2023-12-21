@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 package main
 
 import (
@@ -25,7 +24,6 @@ import (
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/xyproto/simpleredis/v2"
-
 )
 
 var (
@@ -75,9 +73,9 @@ func HandleError(result interface{}, err error) (r interface{}) {
 }
 
 func main() {
-	masterPool = simpleredis.NewConnectionPoolHost("redis-master:6379")
+	masterPool = simpleredis.NewConnectionPoolHost("127.0.0.1:6379")
 	defer masterPool.Close()
-	replicaPool = simpleredis.NewConnectionPoolHost("redis-replica:6379")
+	replicaPool = simpleredis.NewConnectionPoolHost("127.0.0.1:6379")
 	defer replicaPool.Close()
 
 	r := mux.NewRouter()
