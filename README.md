@@ -1,6 +1,6 @@
 # guestbook-go
 
-## Assignment 1 (Continuous Integration Pipeline)
+## Assignment I (Continuous Integration Pipeline)
 ### Problem Statment:
 #### Phase 1:
 - Create a new GitHub public repo from [repo](https://github.com/kubernetes/examples/tree/master/guestbook-go)
