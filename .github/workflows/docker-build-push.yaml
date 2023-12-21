@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main-gk
+      - main
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
     - name: Determine if the image should be built
       id: should_build
       run: |
-        if [[ "$GITHUB_REF" == "refs/heads/main-gk" || $(git log -1 --pretty=format:'%B' | grep -c "BUILD_CONTAINER_IMAGE") -gt 0 ]]; then
+        if [[ "$GITHUB_REF" == "refs/heads/main" || $(git log -1 --pretty=format:'%B' | grep -c "BUILD_CONTAINER_IMAGE") -gt 0 ]]; then
           echo "::set-output name=build::true"
         else
           echo "::set-output name=build::false"
